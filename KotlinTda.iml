@@ -65,9 +65,9 @@
     <orderEntry type="library" name="Maven: com.github.kittinunf.fuel:fuel:1.8.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.github.kittinunf.result:result:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-test:1.1.51" level="project" />
-    <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.opentest4j:opentest4j:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.testng:testng:6.12" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.66" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.17" level="project" />
