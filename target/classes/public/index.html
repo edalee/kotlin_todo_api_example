@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Todoodles</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/skeleton.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/todo.css">
+</head>
+<body>
+<div class="container">
+
+    <div id="app" class="row">
+        <h1>TODOS</h1>
+        <input type="text" @keyup.enter="addTodo" placeholder="Write here..." class="u-full-width">
+        <i v-for="error in errors" class="text-danger">
+            <caption>{{error.message}}</caption>
+        </i>
+        <ul class="f-c">
+            <li v-for="todo in todos" class="f-r">
+                <input type="checkbox" :checked="todo.done" @click="toggleCheck(todo)" class="s-r">
+                <span v-show="edit !== todo.id" @click="toggleEdit(todo.id)" class="fh" v-bind:style="[todo.done ? {textDecoration:'line-through'} : '']">
+                    {{todo.text}}
+                </span>
+                <input type="text" v-show="edit === todo.id" @keyup.enter="editTodo(todo)" :value="todo.text">
+                <button v-if="todo.done" @click="deleteTodo(todo.id)" class="button-primary s-l">delete</button>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            todos: [],
+            errors: [],
+            edit: null,
+            textDecoration: 'line-through'
+        },
+        methods: {
+
+            addTodo: function(event) {
+                axios.post("http://127.0.0.1:9000/todo/", event.srcElement.value)
+                    .then( response => { this.todos.push(response.data);})
+                    .catch( error => {this.errors.push(error);})
+                event.srcElement.value = "";
+            },
+
+            deleteTodo: function(id) {
+                axios.delete("http://127.0.0.1:9000/todo/"+id)
+                    .then( response => {
+
+                        if (response.data = "ok") {
+                            for(var i = this.todos.length; i--;){
+                                if (this.todos[i].id === id) this.todos.splice(i, 1);
+                            }
+                        }
+                    })
+                    .catch( error => {this.errors.push(error);})
+            },
+
+            toggleCheck: function(todo) {
+                todo.done = !todo.done;
+                this.update(todo);
+            },
+
+            toggleEdit: function(id) {
+                this.edit = id;
+            },
+
+            update: function(todo) {
+                axios.put("http://127.0.0.1:9000/todo/"+todo.id, {"text": todo.text, "done": todo.done})
+                .then( response => {
+                    for(var i = this.todos.length; i--;) {
+                        if (this.todos[i].id === todo.id) {
+                            this.todos[i].done = response.data.done;
+                            this.todos[i].text = response.data.text;
+                        }
+                    }
+                })
+                .catch( error => {this.errors.push(error);});
+            },
+
+            editTodo: function(todo) {
+                console.log(event.srcElement.value)
+                axios.put("http://127.0.0.1:9000/todo/"+todo.id, {"text": event.srcElement.value, "done": todo.done})
+                .then( response => {
+                    for(var i = this.todos.length; i--;) {
+                        if (this.todos[i].id === todo.id) {
+                            this.todos[i].done = response.data.done;
+                            this.todos[i].text = response.data.text;
+                        }
+                    }
+                    this.edit = null;
+                })
+                .catch( error => {this.errors.push(error);});
+            }
+        },
+        mounted() {
+
+        }
+    })
+</script>

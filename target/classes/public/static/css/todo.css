@@ -1,0 +1,32 @@
+.f-c {
+    align-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+
+.f-r {
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+}
+
+.s-r {
+    margin-right: 2rem;
+}
+
+.s-l {
+    margin-left: 2rem;
+}
+
+.fh {
+    line-height: 4rem;
+    margin-bottom: 1rem;
+}
+
+.text-danger {
+    color: orange;
+}
+
+.st {
+    text-decoration: line-through;
+}
